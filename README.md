@@ -113,3 +113,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
     - fetch query params from url using useSearchParams
     - using .get("key of the url_query") to get the value
     - using the iframe to get the videos on the page
+
+#### DOTENV
+
+    - npm i react-dotenv
+    - create .env file in the root folder
+    - name the variable starting with REACT_APP_<NAME>
+    - to use environment variables use en.process.REACT_APP_<NAME>
