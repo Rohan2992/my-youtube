@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { closeMenu } from "../utils/toggleSlice";
+import { openMenu, closeMenu } from "../utils/toggleSlice";
+import CommentsContainer from "./CommentsContainer";
 
 const WatchPage = () => {
   const [urlParams] = useSearchParams();
@@ -9,19 +10,24 @@ const WatchPage = () => {
 
   useEffect(() => {
     dispatch(closeMenu());
+
+    return () => dispatch(openMenu());
   });
 
   return (
-    <div className="ml-20 my-8 p-2">
+    <div className="ml-10 my-2 p-2">
       <iframe
         width="885"
         height="498"
         src={"https://www.youtube.com/embed/" + urlParams.get("v")}
         title="Unstoppable- Dino James [Official Music Video]"
-        frameborder="0"
+        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
+        allowFullScreen
       ></iframe>
+      <div className="mt-4 mx-4 font-bold">
+        <CommentsContainer />
+      </div>
     </div>
   );
 };

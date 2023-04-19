@@ -120,3 +120,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
     - create .env file in the root folder
     - name the variable starting with REACT_APP_<NAME>
     - to use environment variables use en.process.REACT_APP_<NAME>
+
+#### Debouncing of 200ms in Search
+
+    It is the process of skiping the intermediate api calls if the time between two keys stroke is less than 200ms.
+    - It improves the user experience
+
+#### Update the search Container items on searching
+
+#### Implementing the caching of apis
+
+    - It is done to reduce the number of API calls
+
+#### Building the comments

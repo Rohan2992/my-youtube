@@ -1,21 +1,21 @@
 import React from "react";
-import ListItems from "./SidebarListItems";
+import SidebarListItems from "./SidebarListItems";
 
 import { useSelector } from "react-redux";
 const listItemsArray = [
-  { name: "Home", symbol: "home" },
-  { name: "Explore", symbol: "explore" },
-  { name: "Shorts", symbol: "movie" },
-  { name: "Subscriptions", symbol: "subscriptions" },
-  { name: "Library", symbol: "video_library" },
-  { name: "History", symbol: "history" },
-  { name: "Your videos", symbol: "slideshow" },
-  { name: "Watch Later", symbol: "watch_later" },
-  { name: "Liked videos", symbol: "thumb_up" },
-  { name: "Settings", symbol: "settings" },
-  { name: "Report", symbol: "report" },
-  { name: "Help", symbol: "help" },
-  { name: "Feedback", symbol: "feedback" }
+  { id: 1, name: "Home", symbol: "home" },
+  { id: 2, name: "Explore", symbol: "explore" },
+  { id: 3, name: "Shorts", symbol: "movie" },
+  { id: 4, name: "Subscriptions", symbol: "subscriptions" },
+  { id: 5, name: "Library", symbol: "video_library" },
+  { id: 6, name: "History", symbol: "history" },
+  { id: 7, name: "Your videos", symbol: "slideshow" },
+  { id: 8, name: "Watch Later", symbol: "watch_later" },
+  { id: 9, name: "Liked videos", symbol: "thumb_up" },
+  { id: 10, name: "Settings", symbol: "settings" },
+  { id: 11, name: "Report", symbol: "report" },
+  { id: 12, name: "Help", symbol: "help" },
+  { id: 13, name: "Feedback", symbol: "feedback" }
 ];
 
 const Sidebar = () => {
@@ -24,7 +24,7 @@ const Sidebar = () => {
   return !isMenuOpen ? null : (
     <div className="p-2 m-2 w-44 shadow-lg">
       <ul>
-        <ListItems list={listItemsArray} />
+        <SidebarListItems list={listItemsArray} />
       </ul>
     </div>
   );

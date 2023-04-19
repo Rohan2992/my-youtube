@@ -1,15 +1,79 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/toggleSlice";
+import { cache } from "../utils/searchSlice";
+import { useSelector } from "react-redux";
+// import { setVideos } from "../utils/searchSlice";
 
 const Head = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchList, setSearchList] = useState([]);
   const dispatch = useDispatch();
+
+  // console.log(searchQuery);
+
+  const SearchLi = ({ listItems }) =>
+    listItems.map((item, index) => {
+      return (
+        <li
+          key={index}
+          className="cursor-pointer m-2 p-1 shadow-md hover:bg-gray-100"
+          onClick={() => {
+            setSearchQuery(item);
+            setIsVisible(false);
+          }}
+        >
+          🔎 {item}
+        </li>
+      );
+    });
+
+  const cachedItems = useSelector((store) => store.search);
+
+  // const searchBarList = async () => {
+  //   const data = await fetch(process.env.REACT_APP_SEARCH_BAR_API);
+  //   const json = await data.json();
+  //   // console.log(json.items);
+  //   // setSearchList(json.items);
+  //   dispatch(setVideos(json.items));
+  // };
+
+  const getSearchSuggestions = async () => {
+    if (cachedItems[searchQuery]) {
+      setSearchList(cachedItems[searchQuery]);
+    } else {
+      const data = await fetch(
+        "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=" +
+          searchQuery
+      );
+      const json = await data.json();
+      setSearchList(json[1]);
+      dispatch(cache({ [searchQuery]: json[1] }));
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => getSearchSuggestions(), 200);
+
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line
+  }, [searchQuery]);
+
+  // Building the toggling feature of Hamburger Menu
   const handleToggling = () => {
     dispatch(toggleMenu());
   };
 
   return (
-    <div className="grid grid-flow-col m-2 p-3 shadow-lg">
+    <div
+      className="grid grid-flow-col m-2 p-3 shadow-lg"
+      onMouseLeave={() => {
+        setIsVisible(false);
+      }}
+    >
       <div className="flex col-span-1">
         <img
           onClick={() => handleToggling()}
@@ -19,23 +83,41 @@ const Head = () => {
         />
         <a href="/">
           <img
-            className="h-8 cursor-pointer  mx-3"
+            className="h-8 cursor-pointer mx-3"
             alt="logo"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3AAJqRTDgZC1wKZNPcVd9sVkwvWi0geRjA2TofWA1&s"
           />
         </a>
       </div>
       <div className="col-span-10 text-center">
-        <input
-          type="text"
-          className="border border-gray-400 w-2.5/4 rounded-l-full p-2 focus:outline-none focus:ring-sky-600 focus:ring-1"
-        />
-        <button
-          className="border border-gray-400 rounded-r-full py-2 px-3
+        <div>
+          <input
+            type="text"
+            className="border border-gray-400 w-1/2 rounded-l-full py-2 px-8 focus:outline-none focus:ring-sky-600 focus:ring-1"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => {
+              setIsVisible(true);
+            }}
+            onMouseDown={() => {
+              setIsVisible(true);
+            }}
+            value={searchQuery}
+          />
+          <button
+            className="border border-gray-400 rounded-r-full py-2 px-3
         "
-        >
-          🔍
-        </button>
+            // onClick={() => searchBarList()}
+          >
+            🔍
+          </button>
+        </div>
+        <div className="relative mx-auto my-2 w-[31rem]">
+          {isVisible && (
+            <ul className="absolute text-left bg-gray-200 p-2 w-[30rem] rounded-lg">
+              <SearchLi listItems={searchList} />
+            </ul>
+          )}
+        </div>
       </div>
       <div>
         <img
