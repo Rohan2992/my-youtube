@@ -3,15 +3,13 @@ import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/toggleSlice";
 import { cache } from "../utils/searchSlice";
 import { useSelector } from "react-redux";
-// import { setVideos } from "../utils/searchSlice";
+import { setVideos } from "../utils/searchSuggestionsSlice";
 
 const Head = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchList, setSearchList] = useState([]);
   const dispatch = useDispatch();
-
-  // console.log(searchQuery);
 
   const SearchLi = ({ listItems }) =>
     listItems.map((item, index) => {
@@ -30,14 +28,14 @@ const Head = () => {
     });
 
   const cachedItems = useSelector((store) => store.search);
+  const API_KEY = process.env.REACT_APP_API_KEY;
+  const dataToSearch = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${searchQuery}&key=${API_KEY}`;
 
-  // const searchBarList = async () => {
-  //   const data = await fetch(process.env.REACT_APP_SEARCH_BAR_API);
-  //   const json = await data.json();
-  //   // console.log(json.items);
-  //   // setSearchList(json.items);
-  //   dispatch(setVideos(json.items));
-  // };
+  const searchBarList = async () => {
+    const data = await fetch(dataToSearch.replace("%22", ""));
+    const json = await data.json();
+    dispatch(setVideos(json.items));
+  };
 
   const getSearchSuggestions = async () => {
     if (cachedItems[searchQuery]) {
@@ -106,7 +104,7 @@ const Head = () => {
           <button
             className="border border-gray-400 rounded-r-full py-2 px-3
         "
-            // onClick={() => searchBarList()}
+            onClick={() => searchBarList()}
           >
             🔍
           </button>

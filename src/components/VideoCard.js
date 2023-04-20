@@ -6,7 +6,7 @@ const VideoCard = ({ video }) => {
     <Link
       className="m-4 p-4 max-h-max w-72 rounded-lg shadow-lg"
       key={video.id}
-      to={"/watch?v=" + video.id}
+      to={"/watch?v=" + (video.id.videoId ? video.id.videoId : video.id)}
     >
       <div className="m-0.5">
         <img
