@@ -86,7 +86,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
     - Head
         - Hamburger Menu
         - Logo
-        - Search Bar
+        - Search
+            - Searchbar
+            - button
+            - list items
         - User Icon
     - Body
         - Sidebar
@@ -94,6 +97,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
             - Buttons List
             - Video Container
                 - video Card
+        - watch later
+            - video redirecting
+            - live Chat
+            - N-level nested comments
 
 #### Redux setup for state management
 
@@ -133,3 +140,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
     - It is done to reduce the number of API calls
 
 #### Building the comments
+
+    - Building the nested N-level comments
+        used recursion and tailwindcss for styling
+
+#### Building the live chat
+
+    - LiveChat
+    - ChatMessage
+    - API polling - updates the data b/w the UI and DL after every 1.5s (1500ms) for enhancing the user experience
