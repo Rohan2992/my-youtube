@@ -149,3 +149,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
     - LiveChat
     - ChatMessage
     - API polling - updates the data b/w the UI and DL after every 1.5s (1500ms) for enhancing the user experience
+
+#### Some More Hooks
+
+    - UseMemo
+        - It lets us to cache the results of calculations between re-renders.
+    - useCallback
+        - It lets us to cache the function definition betweeb re-renders.
+    - useRef
+        - It references a value that is not needed for re-rendering, i.e, it persists the value between different renders
